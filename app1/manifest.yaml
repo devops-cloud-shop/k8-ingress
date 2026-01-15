@@ -8,7 +8,6 @@ metadata:
     project: roboshop
     app: app1
 spec:
-  replicas: 2
   selector:
     matchLabels: #these labels are used to select pods
       purpose: ingress-demo
@@ -46,16 +45,24 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: app1
+  annotations:
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:064629264387:certificate/10e8201a-7cc6-49cd-aaec-8bdaa934a724
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/tags: Environment=dev,Project=roboshop
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: roboshop
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: alb
   rules:
-  - http:
+  - host: "app1.prav4cloud.online"
+    http:
       paths:
-      - path: /testpath
-        pathType: Prefix
+      - pathType: Prefix
+        path: "/"
         backend:
           service:
-            name: test
+            name: app1
             port:
               number: 80
