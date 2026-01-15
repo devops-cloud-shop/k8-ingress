@@ -3,7 +3,7 @@
 ```
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
-    --cluster roboshop-dev \
+    --cluster RoboShop-dev \
     --approve
 ```
 
