@@ -22,13 +22,14 @@ aws iam create-policy \
 4. Create Service account and IAM role. map the above policy
 ```
 eksctl create iamserviceaccount \
---cluster=roboshop-dev \
+--cluster=RoboShop-dev \
 --namespace=kube-system \
 --name=aws-load-balancer-controller \
---attach-policy-arn=arn:aws:iam::160885265516:policy/AWSLoadBalancerControllerIAMPolicy \
+--attach-policy-arn=arn:aws:iam::064629264387:policy/AWSLoadBalancerControllerIAMPolicy \
 --override-existing-serviceaccounts \
 --region us-east-1 \
 --approve
+
 ```
 
 ### Install drivers
@@ -47,7 +48,7 @@ helm repo add eks https://aws.github.io/eks-charts
 
 Install Load balancer controller
 ```
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=roboshop-dev --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=RoboShop-dev --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
 ```
 
 check drivers are running
